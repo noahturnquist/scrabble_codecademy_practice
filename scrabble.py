@@ -12,9 +12,10 @@ def score_word(word):
     point_total += letter_to_points[letter]
   return point_total
 #Test Function
-brownie_points = score_word("BROWNIE")
-print (brownie_points)
+#brownie_points = score_word("BROWNIE")
+#print (brownie_points)
 
+#List of players and their words... so far ;)
 player_to_words = {
   "player1": ["BLUE", "TENNIS", "EXIT"],
   "wordNerd": ["EARTH", "EYES", "MACHINE"],
@@ -22,12 +23,24 @@ player_to_words = {
   "Prof Reader": ["ZAP", "COMA", "PERIOD"]
 }
 
-player_to_points = {}
+#Convert players words to points and assing to dict player_to_points
+def convert_to_points():
+    player_to_points = {}
+    for player, words in player_to_words.items():
+        player_points = 0
+        for word in words:
+            player_points += score_word(word)
+        player_to_points[player] = player_points
+    return player_to_points
 
-for player, words in player_to_words.items():
-  player_points = 0
-  for word in words:
-    player_points += score_word(word)
-  player_to_points[player] = player_points
-  
-print (player_to_points)
+#Add a word to a players list and return the point totals for each player
+def play_word(player, word):
+    word_upper = word.upper()
+    player_to_words[player].append(word_upper)
+    print (player + " played " + word_upper + " for " + str(score_word(word_upper)) + " points!")
+    return convert_to_points()
+
+print (play_word("player1", "Hello World"))
+print (play_word("wordNerd", "HUMpdAY"))
+print (play_word("Lexi Con", "Indupitably"))
+print (play_word("Prof Reader", "YELLOW"))
